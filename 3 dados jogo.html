@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+<meta charset="UTF-8">
+<title>Jogo dos 3 Dados</title>
+
+<style>
+body{
+    font-family: Arial;
+    text-align:center;
+    background:#f2f2f2;
+}
+
+h1{
+    color:#333;
+}
+
+.dados{
+    font-size:60px;
+    margin:20px;
+}
+
+button{
+    padding:12px 25px;
+    font-size:18px;
+    cursor:pointer;
+    border:none;
+    border-radius:8px;
+    background:#28a745;
+    color:white;
+}
+
+button:hover{
+    background:#218838;
+}
+
+.caixa{
+    background:white;
+    padding:20px;
+    margin:20px auto;
+    width:400px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.placar{
+    font-size:20px;
+    margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎲 Jogo dos 3 Dados</h1>
+
+<div class="caixa">
+
+<h2>Seu jogo</h2>
+<div id="dadosJogador" class="dados">🎲 🎲 🎲</div>
+<p id="somaJogador">Soma: 0</p>
+
+<h2>Computador</h2>
+<div id="dadosPc" class="dados">🎲 🎲 🎲</div>
+<p id="somaPc">Soma: 0</p>
+
+<br>
+
+<button onclick="rolarDados()">Rolar Dados</button>
+
+<h2 id="resultado"></h2>
+
+<div class="placar">
+🏆 Você: <span id="pJogador">0</span> |
+🤖 Computador: <span id="pPc">0</span>
+</div>
+
+</div>
+
+<script>
+
+let pontosJogador = 0
+let pontosPc = 0
+
+function dadoEmoji(numero){
+
+    const dados = ["⚀","⚁","⚂","⚃","⚄","⚅"]
+
+    return dados[numero-1]
+}
+
+function rolar(){
+
+    return Math.floor(Math.random()*6)+1
+}
+
+function rolarDados(){
+
+    let d1 = rolar()
+    let d2 = rolar()
+    let d3 = rolar()
+
+    let pc1 = rolar()
+    let pc2 = rolar()
+    let pc3 = rolar()
+
+    let somaJogador = d1+d2+d3
+    let somaPc = pc1+pc2+pc3
+
+    document.getElementById("dadosJogador").innerHTML =
+    dadoEmoji(d1)+" "+dadoEmoji(d2)+" "+dadoEmoji(d3)
+
+    document.getElementById("dadosPc").innerHTML =
+    dadoEmoji(pc1)+" "+dadoEmoji(pc2)+" "+dadoEmoji(pc3)
+
+    document.getElementById("somaJogador").innerText = "Soma: "+somaJogador
+    document.getElementById("somaPc").innerText = "Soma: "+somaPc
+
+    let resultado = ""
+
+    if(somaJogador > somaPc){
+        resultado = "🎉 Você venceu!"
+        pontosJogador++
+    }
+    else if(somaPc > somaJogador){
+        resultado = "🤖 Computador venceu!"
+        pontosPc++
+    }
+    else{
+        resultado = "😲 Empate!"
+    }
+
+    document.getElementById("resultado").innerText = resultado
+
+    document.getElementById("pJogador").innerText = pontosJogador
+    document.getElementById("pPc").innerText = pontosPc
+
+}
+
+</script>
+
+</body>
+</html>
